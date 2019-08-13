@@ -7,15 +7,26 @@ export default class PortfolioContainer extends Component {
     super();
 
     this.state = {
+      isLoading: false,
       pageTitle: "Aaron Harrison React Portfolio",
       data: [
-        {title: "Sprint"}, 
-        {title: "Boostability"},
-        {title: "SC Builders"}
+        { title: "Sprint", catagory: "eCommerce" }, 
+        { title: "Boostability", catagory: "Scheduling"},
+        { title: "SC Builders", catagory: "Enterprise"},
+        { title: "Test Test Test", catagory: "eCommerce" }
       ]
     };
 
-    this.handlePageTitleUpdate = this.handlePageTitleUpdate.bind(this);
+    this.handleFilter = this.handleFilter.bind(this);
+
+  }
+
+  handleFilter(filter) {
+    this.setState(({
+      data: this.state.data.filter(item => {
+        return item.catagory === filter;
+      })
+    }))
   }
 
   portfolioItems() {
@@ -23,25 +34,24 @@ export default class PortfolioContainer extends Component {
       return <PortfolioItem title={ item.title } />;
     })
   }
-  
-  handlePageTitleUpdate() {
-    this.setState({
-      pageTitle: "Something Else"
-    })
-  }
 
   render() {
+    if (this.state.isLoading) {
+      return (
+        <div>Laoding...</div>
+      )
+    }
     return (
       <div>
         <h1>{ this.state.pageTitle }</h1>
-        <h2>Portfolio Items go here...</h2>
-        
+
+        <button onClick={() => this.handleFilter("eCommerce")} >eCommerce</button>
+        <button onClick={() => this.handleFilter("Scheduling")} >Scheduling</button>
+        <button onClick={() => this.handleFilter("Enterprise")} >Enterprise</button>
+
         {this.portfolioItems()}
 
-        <hr />
-
-        <button onClick={this.handlePageTitleUpdate}>Change Title</button>
-      </div>
+    </div>
     )
   }
 }
