@@ -10,10 +10,10 @@ export default class PortfolioContainer extends Component {
       isLoading: false,
       pageTitle: "Aaron Harrison React Portfolio",
       data: [
-        { title: "Sprint", catagory: "eCommerce" }, 
-        { title: "Boostability", catagory: "Scheduling"},
-        { title: "SC Builders", catagory: "Enterprise"},
-        { title: "Test Test Test", catagory: "eCommerce" }
+        { title: "Sprint", catagory: "eCommerce", slug: "sprint" }, 
+        { title: "Boostability", catagory: "Scheduling", slug: "boost"},
+        { title: "SC Builders", catagory: "Enterprise", slug: "sc-builders"},
+        { title: "Test Test Test", catagory: "eCommerce", slug: "test"}
       ]
     };
 
@@ -31,7 +31,7 @@ export default class PortfolioContainer extends Component {
 
   portfolioItems() {
     return this.state.data.map(item => {
-      return <PortfolioItem title={ item.title } />;
+      return <PortfolioItem title={ item.title } slug={ item.slug } catagory={ item.catagory } />;
     })
   }
 

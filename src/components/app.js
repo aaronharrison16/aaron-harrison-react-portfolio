@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 
 
-import PortfolioContainer from './portfolio/portfolio-container';
+import PortfolioDetail from "./portfolio/portfolio-detail";
 import NavigationContainer from './navigation/navigation-container';
 import Home from './pages/home';
 import About from './pages/about';
@@ -18,8 +18,12 @@ export default class App extends Component {
   render() {
     return (
       <div className='app'>
+
         <Router>
           <div>
+            <h1>Aaron Harrison Portfolio</h1>
+            <div>The day started {moment().startOf('day').fromNow()}</div>
+
             < NavigationContainer />
 
             <Switch>
@@ -27,13 +31,10 @@ export default class App extends Component {
               <Route path='/about' component={About} />
               <Route path='/contact' component={Contact} />
               <Route path='/blog' component={Blog} />
+              <Route path='/portfolio/:slug' component={PortfolioDetail} />
             </Switch>
           </div>
         </Router>
-
-        <h1>Aaron Harrison Portfolio</h1>
-        <div>The day started { moment().startOf('day').fromNow() }</div>
-        <PortfolioContainer />
       </div>
     );
   }
