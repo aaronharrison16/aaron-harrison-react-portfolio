@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 
 import PortfolioItem from "./portfolio-item";
 
@@ -9,16 +10,25 @@ export default class PortfolioContainer extends Component {
     this.state = {
       isLoading: false,
       pageTitle: "Aaron Harrison React Portfolio",
-      data: [
-        { title: "Sprint", catagory: "eCommerce", slug: "sprint" }, 
-        { title: "Boostability", catagory: "Scheduling", slug: "boost"},
-        { title: "SC Builders", catagory: "Enterprise", slug: "sc-builders"},
-        { title: "Test Test Test", catagory: "eCommerce", slug: "test"}
-      ]
+      data: []
     };
 
     this.handleFilter = this.handleFilter.bind(this);
+  }
 
+  getPortfolioItems() {
+    axios
+      .get('https://aaronharrison.devcamp.space/portfolio/portfolio_items')
+      .then(response => {
+        // handle success
+        this.setState({
+          data: response.data.portfolio_items
+        })
+      })
+      .catch(error => {
+        // handle error
+        console.log(error);
+      })
   }
 
   handleFilter(filter) {
@@ -31,11 +41,16 @@ export default class PortfolioContainer extends Component {
 
   portfolioItems() {
     return this.state.data.map(item => {
-      return <PortfolioItem title={ item.title } slug={ item.slug } catagory={ item.catagory } />;
+      console.log(item);
+      return <PortfolioItem title={ item.name } url={ item.url } slug={ item.id } />;
     })
   }
 
-  render() {
+  componentDidMount() {
+    this.getPortfolioItems();
+  }
+
+  render() {    
     if (this.state.isLoading) {
       return (
         <div>Laoding...</div>

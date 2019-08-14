@@ -6,6 +6,7 @@ import {
   Route
 } from 'react-router-dom';
 
+
 import NoMatch from "./pages/no-match";
 import PortfolioDetail from "./portfolio/portfolio-detail";
 import NavigationContainer from './navigation/navigation-container';
@@ -15,6 +16,7 @@ import Contact from './pages/contact';
 import Blog from './pages/blog';
 
 export default class App extends Component {
+
   render() {
     return (
       <div className='app'>
