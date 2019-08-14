@@ -6,7 +6,7 @@ import {
   Route
 } from 'react-router-dom';
 
-
+import NoMatch from "./pages/no-match";
 import PortfolioDetail from "./portfolio/portfolio-detail";
 import NavigationContainer from './navigation/navigation-container';
 import Home from './pages/home';
@@ -32,6 +32,7 @@ export default class App extends Component {
               <Route path='/contact' component={Contact} />
               <Route path='/blog' component={Blog} />
               <Route path='/portfolio/:slug' component={PortfolioDetail} />
+              <Route component={NoMatch} />
             </Switch>
           </div>
         </Router>
