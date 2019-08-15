@@ -2,4 +2,28 @@
   display: flex;
   justify-content: space-between;
   padding: 30px;
+
+  .left-side {
+    display: flex;
+  }
+
+  .nav-link-wrapper {
+    height: 22px;
+    border-bottom: 1px solid transparent;
+    transition: 0.2s ease-in-out;
+
+    a {
+      text-decoration: none;
+      color: $grey;
+
+      &:hover {
+        color: black;
+      }
+    }
+
+    &:hover {
+      border-bottom: 1px solid black;
+    }
+  }
 }
+
