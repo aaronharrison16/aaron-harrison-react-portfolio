@@ -1,11 +1,5 @@
 import React, { Component } from 'react';
-import moment from "moment";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route
-} from 'react-router-dom';
-
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import NoMatch from "./pages/no-match";
 import PortfolioDetail from "./portfolio/portfolio-detail";
@@ -23,9 +17,6 @@ export default class App extends Component {
 
         <Router>
           <div>
-            <h1>Aaron Harrison Portfolio</h1>
-            <div>The day started {moment().startOf('day').fromNow()}</div>
-
             < NavigationContainer />
 
             <Switch>
