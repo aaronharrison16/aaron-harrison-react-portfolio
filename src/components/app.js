@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
+import Auth from './pages/auth';
 import NoMatch from "./pages/no-match";
 import PortfolioDetail from "./portfolio/portfolio-detail";
 import NavigationContainer from './navigation/navigation-container';
@@ -21,6 +22,7 @@ export default class App extends Component {
 
             <Switch>
               <Route exact path="/" component={Home} />
+              <Route path='/auth' component={Auth} />
               <Route path='/about' component={About} />
               <Route path='/contact' component={Contact} />
               <Route path='/blog' component={Blog} />
