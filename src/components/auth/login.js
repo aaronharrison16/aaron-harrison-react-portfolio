@@ -38,7 +38,6 @@ export default class Login extends Component {
           />
           <input 
             type='password'
-            type='password'
             name="password"
             placeholder="Password"
             value={this.state.password}
