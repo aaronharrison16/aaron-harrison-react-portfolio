@@ -14,6 +14,7 @@ import Home from './pages/home';
 import About from './pages/about';
 import Contact from './pages/contact';
 import Blog from './pages/blog';
+import BlogDetail from "./pages/blog-detail";
 
 library.add(faTrash, faSignOutAlt, faEdit)
 
@@ -85,11 +86,10 @@ export default class App extends Component {
 
   render() {
     return (
-      <div className='container'>
-
+      <div className="container">
         <Router>
           <div>
-            < NavigationContainer 
+            <NavigationContainer
               loggedInStatus={this.state.loggedInStatus}
               handleSuccessfulLogout={this.handleSuccessfulLogout}
             />
@@ -97,22 +97,25 @@ export default class App extends Component {
             <Switch>
               <Route exact path="/" component={Home} />
 
-              <Route 
-                path='/auth' 
+              <Route
+                path="/auth"
                 render={props => (
                   <Auth
                     {...props}
                     handleSuccessfulLogin={this.handleSuccessfulLogin}
                     handleUnsuccessfulLogin={this.handleUnsuccessfulLogin}
-                  />  
-                )} 
+                  />
+                )}
               />
-              
-              <Route path='/about' component={About} />
-              <Route path='/contact' component={Contact} />
-              <Route path='/blog' component={Blog} />
-              <Route path='/portfolio/:slug' component={PortfolioDetail} />
-              {this.state.loggedInStatus === "LOGGED_IN" ? this.authorizedPages() : null }
+
+              <Route path="/about" component={About} />
+              <Route path="/contact" component={Contact} />
+              <Route exact path="/blog" component={Blog} />
+              <Route path="/blog/:slug" component={BlogDetail} />
+              <Route path="/portfolio/:slug" component={PortfolioDetail} />
+              {this.state.loggedInStatus === "LOGGED_IN"
+                ? this.authorizedPages()
+                : null}
               <Route component={NoMatch} />
             </Switch>
           </div>
