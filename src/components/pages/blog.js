@@ -4,38 +4,47 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from 'axios';
 import BlogItem from '../blog/blog-item';
+import BlogModal from '../modals/blog-modal';
 
 class Blog extends Component {
   constructor() {
-    super()
-  
+    super();
+
     this.state = {
       blogItems: [],
       totalCount: 0,
       currentPage: 0,
-      isLoading: true
-    }
+      isLoading: true,
+      blogModalIsOpen: false
+    };
 
     this.getBlogItems = this.getBlogItems.bind(this);
     this.onScroll = this.onScroll.bind(this);
+    this.handleNewBlogClick = this.handleNewBlogClick.bind(this);
+    this.handleModalClose = this.handleModalClose.bind(this);
     window.addEventListener("scroll", this.onScroll, false);
   }
 
   getBlogItems() {
     this.setState({
-      currentPage: this.state.currentPage +1
+      currentPage: this.state.currentPage + 1
     });
 
-    axios.get(`https://aaronharrison.devcamp.space/portfolio/portfolio_blogs?page=${this.state.currentPage}`, {withCredentials: true
-    }).then(response => {
-      this.setState({
-        blogItems: this.state.blogItems.concat(response.data.portfolio_blogs),
-        totalCount: response.data.meta.total_records,
-        isLoading: false
+    axios
+      .get(
+        `https://aaronharrison.devcamp.space/portfolio/portfolio_blogs?page=${this.state.currentPage}`,
+        { withCredentials: true }
+      )
+      .then(response => {
+        this.setState({
+          blogItems: this.state.blogItems.concat(response.data.portfolio_blogs),
+          totalCount: response.data.meta.total_records,
+          isLoading: false
+        });
+      })
+      .catch(error => {
+        console.log("getBlogItems", error);
       });
-    }).catch(error => {
-      console.log("getBlogItems", error)
-    })
   }
 
   componentWillMount() {
@@ -46,8 +55,23 @@ class Blog extends Component {
     window.removeEventListener("scroll", this.onScroll, false);
   }
 
+  handleModalClose() {
+    this.setState({
+      blogModalIsOpen: false
+    });
+  }
+
+  handleNewBlogClick() {
+    this.setState({
+      blogModalIsOpen: true
+    });
+  }
+
   onScroll() {
-    if (this.state.isLoading || this.state.blogItems.length === this.state.totalCount) {
+    if (
+      this.state.isLoading ||
+      this.state.blogItems.length === this.state.totalCount
+    ) {
       return;
     }
 
@@ -55,23 +79,29 @@ class Blog extends Component {
       window.innerHeight + document.documentElement.scrollTop ===
       document.documentElement.offsetHeight
     ) {
-      this.getBlogItems()
+      this.getBlogItems();
     }
   }
 
   render() {
     const blogRecords = this.state.blogItems.map(blogItem => {
-      return <BlogItem key={blogItem.id} blogItem={blogItem} />
-    })
+      return <BlogItem key={blogItem.id} blogItem={blogItem} />;
+    });
     return (
       <div className="blog-container">
+        <BlogModal handleModalClose={this.handleModalClose} modalIsOpen={this.state.blogModalIsOpen} />
+
+        <div className='new-blog-link'>
+          <a onClick={this.handleNewBlogClick}>New Blog</a>
+        </div>
+
         <div className="content-container">{blogRecords}</div>
 
         {this.state.isLoading ? (
-        <div className="content-loader">
-          <FontAwesomeIcon icon="spinner" spin />
-        </div>
-        ) : null }
+          <div className="content-loader">
+            <FontAwesomeIcon icon="spinner" spin />
+          </div>
+        ) : null}
       </div>
     );
   }
