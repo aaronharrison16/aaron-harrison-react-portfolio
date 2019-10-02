@@ -35,7 +35,8 @@ class Blog extends Component {
 
   getBlogItems() {
     this.setState({
-      currentPage: this.state.currentPage + 1
+      currentPage: this.state.currentPage + 1,
+      isLoading: true
     });
 
     axios
