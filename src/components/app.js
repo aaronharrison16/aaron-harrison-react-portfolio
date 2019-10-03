@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import axios from 'axios';
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash, faSignOutAlt, faEdit, faSpinner, faPenSquare } from "@fortawesome/free-solid-svg-icons";
 
 import Auth from './pages/auth';
 import NoMatch from "./pages/no-match";
@@ -15,12 +12,13 @@ import About from './pages/about';
 import Contact from './pages/contact';
 import Blog from './pages/blog';
 import BlogDetail from "./pages/blog-detail";
-
-library.add(faTrash, faSignOutAlt, faEdit, faSpinner, faPenSquare)
+import Icons from "../helpers/icons"
 
 export default class App extends Component {
   constructor(props) {
     super(props);
+
+    Icons()
 
     this.state = {
       loggedInStatus: "NOT_LOGGED_IN"
