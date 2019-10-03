@@ -85,8 +85,8 @@ class Blog extends Component {
     }
 
     if (
-      window.innerHeight + document.documentElement.scrollTop ===
-      document.documentElement.offsetHeight
+      window.innerHeight + document.documentElement.scrollTop >=
+      document.documentElement.offsetHeight-10
     ) {
       this.getBlogItems();
     }
