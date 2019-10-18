@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
-import axios from 'axios';
+import React, { Component } from "react";
+import axios from "axios";
 import ReactHtmlParser from "react-html-parser";
 
-import BlogFeaturedImage from '../blog/blog-featured-image'
+import BlogFeaturedImage from "../blog/blog-featured-image";
+import BlogForm from "../blog/blog-form";
 
 export default class BlogDetail extends Component {
   constructor(props) {
@@ -10,19 +11,31 @@ export default class BlogDetail extends Component {
 
     this.state = {
       currentId: this.props.match.params.slug,
-      blogItem: {}
+      blogItem: {},
+      editMode: false
     };
+
+    this.handleEditClick = this.handleEditClick.bind(this);
+  }
+
+  handleEditClick() {
+    console.log("handle edit clicked");
+    this.setState({ editMode: true });
   }
 
   getBlogItem() {
-    axios.get(`https://aaronharrison.devcamp.space/portfolio/portfolio_blogs/${this.state.currentId}`
-    ).then(response => {
-      this.setState({
-        blogItem: response.data.portfolio_blog
+    axios
+      .get(
+        `https://aaronharrison.devcamp.space/portfolio/portfolio_blogs/${this.state.currentId}`
+      )
+      .then(response => {
+        this.setState({
+          blogItem: response.data.portfolio_blog
+        });
       })
-    }).catch(error => {
-      console.log("getBlogItem", error)
-    })
+      .catch(error => {
+        console.log("getBlogItem", error);
+      });
   }
 
   componentWillMount() {
@@ -35,18 +48,26 @@ export default class BlogDetail extends Component {
       content,
       featured_image_url,
       blog_status
-    } = this.state.blogItem
+    } = this.state.blogItem;
 
-    return (
-      <div className="blog-container">
-        <div className="content-container">
-          <h1>{title}</h1>
+    const contentManager = () => {
+      if (this.state.editMode == true) {
+        return (
+          <BlogForm editMode={this.state.editMode} blog={this.state.blogItem} />
+        );
+      } else {
+        return (
+          <div className="content-container">
+            <h1 onClick={this.handleEditClick}>{title}</h1>
 
-          <BlogFeaturedImage img={featured_image_url} />
+            <BlogFeaturedImage img={featured_image_url} />
 
-          <div className='content'>{ReactHtmlParser(content)}</div>
-        </div>
-      </div>
-    );
+            <div className="content">{ReactHtmlParser(content)}</div>
+          </div>
+        );
+      }
+    };
+
+    return <div className="blog-container">{contentManager()}</div>;
   }
 }

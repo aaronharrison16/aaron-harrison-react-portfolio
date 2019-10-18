@@ -12,4 +12,10 @@
     @include base-grid();
     grid-template-columns: 200px;
   }
+
+  .blog-manager-image-wrapper {
+    img {
+      width: 100%;
+    }
+  }
 }
