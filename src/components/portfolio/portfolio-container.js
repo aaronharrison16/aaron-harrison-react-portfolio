@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import PortfolioItem from "./portfolio-item";
 
@@ -8,7 +9,7 @@ export default class PortfolioContainer extends Component {
     super();
 
     this.state = {
-      isLoading: false,
+      isLoading: true,
       pageTitle: "Aaron Harrison React Portfolio",
       data: []
     };
@@ -20,7 +21,8 @@ export default class PortfolioContainer extends Component {
       .then(response => {
         // handle success
         this.setState({
-          data: response.data.portfolio_items
+          data: response.data.portfolio_items,
+          isLoading: false
         });
       })
       .catch(error => {
@@ -41,7 +43,11 @@ export default class PortfolioContainer extends Component {
 
   render() {
     if (this.state.isLoading) {
-      return <div>Laoding...</div>;
+      return (
+        <div className="content-loader">
+          <FontAwesomeIcon icon="spinner" spin />
+        </div>
+      );
     }
     return (
       <div className="portfolio-items-wrapper">{this.portfolioItems()}</div>

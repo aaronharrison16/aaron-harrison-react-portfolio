@@ -1,4 +1,8 @@
 .content-loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   color: $teal;
   font-size: 2.5em;
+  padding: 30px;
 }
