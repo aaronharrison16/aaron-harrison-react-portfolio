@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import ReactHtmlParser from "react-html-parser";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import BlogFeaturedImage from "../blog/blog-featured-image";
 import BlogForm from "../blog/blog-form";
@@ -20,6 +21,11 @@ export default class BlogDetail extends Component {
     this.handleUpdateFormSubmission = this.handleUpdateFormSubmission.bind(
       this
     );
+    this.handleDeleteClick = this.handleDeleteClick.bind(this);
+  }
+
+  handleDeleteClick() {
+    console.log("Handle Delete Click");
   }
 
   handleUpdateFormSubmission(blog) {
@@ -40,6 +46,21 @@ export default class BlogDetail extends Component {
   handleEditClick() {
     if (this.props.loggedInStatus === "LOGGED_IN") {
       this.setState({ editMode: true });
+    }
+  }
+
+  handleDeleteClick() {
+    console.log("Handle Delete Click");
+    var dialogResponse = confirm("Are you sure you want to delete your post?");
+    if (this.props.loggedInStatus === "LOGGED_IN" && dialogResponse) {
+      axios
+        .delete(
+          `https://aaronharrison.devcamp.space/portfolio/portfolio_blogs/${this.state.currentId}`,
+          { withCredentials: true }
+        )
+        .then(response => {
+          this.props.history.push("/blog");
+        });
     }
   }
 
@@ -83,11 +104,24 @@ export default class BlogDetail extends Component {
       } else {
         return (
           <div className="content-container">
-            <h1 onClick={this.handleEditClick}>{title}</h1>
+            <h1>{title}</h1>
 
             <BlogFeaturedImage img={featured_image_url} />
-
             <div className="content">{ReactHtmlParser(content)}</div>
+
+            {this.props.loggedInStatus === "LOGGED_IN" ? (
+              <div className="blog-options-wrapper">
+                <div className="icon">
+                  <FontAwesomeIcon icon="edit" onClick={this.handleEditClick} />
+                </div>
+                <div className="icon">
+                  <FontAwesomeIcon
+                    icon="trash"
+                    onClick={this.handleDeleteClick}
+                  />
+                </div>
+              </div>
+            ) : null}
           </div>
         );
       }
