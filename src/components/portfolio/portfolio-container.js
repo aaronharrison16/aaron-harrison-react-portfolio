@@ -12,8 +12,6 @@ export default class PortfolioContainer extends Component {
       pageTitle: "Aaron Harrison React Portfolio",
       data: []
     };
-
-    this.handleFilter = this.handleFilter.bind(this);
   }
 
   getPortfolioItems() {
