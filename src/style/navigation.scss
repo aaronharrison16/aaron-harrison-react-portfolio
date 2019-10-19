@@ -1,14 +1,16 @@
 .nav-wrapper {
   display: flex;
   justify-content: space-between;
-  padding: 30px;
+  align-items: center;
+  padding: 0 30px;
+  height: 84px;
 
   .right-side {
     a {
       margin-left: 15px;
       cursor: pointer;
       color: $teal;
-      transition: ease-in-out .5s;
+      transition: ease-in-out 0.5s;
 
       &:hover {
         color: $dark-teal;
@@ -45,4 +47,3 @@
     }
   }
 }
-
